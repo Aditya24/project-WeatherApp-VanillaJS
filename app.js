@@ -29,7 +29,7 @@ window.addEventListener("load", () => {
             const icon = data.weather[0]["icon"];
             //Updating DOM with API
             timezone.textContent = city;
-            tempDegree.textContent = temperature;
+            tempDegree.textContent = Math.round(temperature - 273);
             tempDescription.textContent = description;
 
             //Set Icon
