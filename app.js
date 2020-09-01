@@ -7,7 +7,7 @@ window.addEventListener("load", () => {
   const tempDescription = document.querySelector(".temperature-description");
   const tempDegree = document.querySelector(".temperature-degree");
   const timezone = document.querySelector(".location-timezone");
-  //const iconText = document.querySelector(".icon");
+  const weatherIcon = document.querySelector(".icon");
 
   navigator.geolocation
     ? navigator.geolocation.getCurrentPosition((position) => {
@@ -23,24 +23,22 @@ window.addEventListener("load", () => {
           })
           .then((data) => {
             console.log(data);
+            //Using Data Destructuring
+            const { name } = data;
+            const { temp } = data.main;
+            const { description, icon } = data.weather[0];
+            /*
             const city = data.name;
             const temperature = data.main.temp;
             const description = data.weather[0]["description"];
-            const icon = data.weather[0]["icon"];
-            //Updating DOM with API
-            timezone.textContent = city;
-            tempDegree.textContent = Math.round(temperature - 273);
-            tempDescription.textContent = description;
+            const icon = data.weather[0]["icon"];*/
 
-            //Set Icon
-            setIcons(icon, document.querySelector(".icon"));
+            //Updating DOM with API
+            timezone.textContent = name;
+            tempDegree.textContent = Math.round(temp - 273);
+            tempDescription.textContent = description;
+            weatherIcon.textContent = icon;
           });
       })
     : (msg.textContext = "Please turn on geo location");
-  function setIcons(icon, iconID) {
-    const skycons = new Skycons({ color: "white" });
-    const currentIcon = icon.replace(/-/g, "_").toUpperCase;
-    skycons.play();
-    return skycons.set(iconID, skycons[currentIcon]);
-  }
 });
