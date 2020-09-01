@@ -26,7 +26,7 @@ window.addEventListener("load", () => {
             //Using Data Destructuring
             const { name } = data;
             const { temp } = data.main;
-            const { description, icon } = data.weather[0];
+            const { description, id } = data.weather[0];
             /*
             const city = data.name;
             const temperature = data.main.temp;
@@ -37,7 +37,22 @@ window.addEventListener("load", () => {
             timezone.textContent = name;
             tempDegree.textContent = Math.round(temp - 273);
             tempDescription.textContent = description;
-            weatherIcon.textContent = icon;
+            // weatherIcon.textContent = id;
+            if (id < 250) {
+              weatherIcon.src = "./icons/thunderstorm.png";
+            } else if (id < 350) {
+              weatherIcon.src = "./icons/shower_rain.png";
+            } else if (id < 550) {
+              weatherIcon.src = "./icons/rain.png";
+            } else if (id < 650) {
+              weatherIcon.src = "./icons/snow.png";
+            } else if (id < 800) {
+              weatherIcon.src = "./icons/mist.png";
+            } else if (id === 800) {
+              weatherIcon.src = "./icons/clear_sky.png";
+            } else if (id >= 800) {
+              weatherIcon.src = "./icons/broken_clouds.png";
+            }
           });
       })
     : (msg.textContext = "Please turn on geo location");
