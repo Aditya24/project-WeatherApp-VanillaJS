@@ -7,7 +7,7 @@ window.addEventListener("load", () => {
   const tempDescription = document.querySelector(".temperature-description");
   const tempDegree = document.querySelector(".temperature-degree");
   const timezone = document.querySelector(".location-timezone");
-  const weatherIcon = document.querySelector(".icon");
+  const weatherIcon = document.querySelector(".temp-icon");
 
   navigator.geolocation
     ? navigator.geolocation.getCurrentPosition((position) => {
@@ -26,33 +26,30 @@ window.addEventListener("load", () => {
             //Using Data Destructuring
             const { name } = data;
             const { temp } = data.main;
-            const { description, id } = data.weather[0];
-            /*
-            const city = data.name;
-            const temperature = data.main.temp;
-            const description = data.weather[0]["description"];
-            const icon = data.weather[0]["icon"];*/
+            const { description, id, icon, main } = data.weather[0];
 
             //Updating DOM with API
             timezone.textContent = name;
             tempDegree.textContent = Math.round(temp - 273);
-            tempDescription.textContent = description;
+            tempDescription.textContent = main;
             // weatherIcon.textContent = id;
             if (id < 250) {
-              weatherIcon.src = "./icons/thunderstorm.png";
+              weatherIcon.src = "./icons/storm.svg";
             } else if (id < 350) {
-              weatherIcon.src = "./icons/shower_rain.png";
+              weatherIcon.src = "./icons/drizzle.svg";
             } else if (id < 550) {
-              weatherIcon.src = "./icons/rain.png";
+              weatherIcon.src = "./icons/rain.svg";
             } else if (id < 650) {
-              weatherIcon.src = "./icons/snow.png";
+              weatherIcon.src = "./icons/snow.svg";
             } else if (id < 800) {
-              weatherIcon.src = "./icons/mist.png";
+              weatherIcon.src = "./icons/atmosphere.svg";
             } else if (id === 800) {
-              weatherIcon.src = "./icons/clear_sky.png";
-            } else if (id >= 800) {
-              weatherIcon.src = "./icons/broken_clouds.png";
+              weatherIcon.src = "./icons/sun.svg";
+            } else if (id > 800) {
+              weatherIcon.src = "./icons/clouds.svg";
             }
+            console.log(Math.round(temp - 273));
+            console.log(name);
           });
       })
     : (msg.textContext = "Please turn on geo location");
